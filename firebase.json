@@ -1,0 +1,6 @@
+{
+  "firestore": {
+    "database": "shyky-beauty",
+    "rules": "firestore.rules"
+  }
+}

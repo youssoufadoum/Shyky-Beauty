@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Jost", sans-serif;
+  
+  --color-brand-pink: #e8547a;
+  --color-brand-dark-pink: #c43060;
+  --color-brand-blush: #f7d6e0;
+  --color-brand-cream: #fdf8f5;
+  --color-brand-deep: #1a0a0f;
+  --color-brand-gold: #c9a96e;
+  --color-brand-light: #fff9f7;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-brand-cream text-brand-deep overflow-x-hidden;
+    scroll-behavior: smooth;
+  }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 22s linear infinite;
+}
+
+/* Custom styles from the original code that are easier as raw CSS classes */
+.logo {
+  @apply font-serif text-2xl font-semibold text-brand-pink tracking-widest no-underline;
+}
+
+.logo span {
+  @apply block text-[10px] font-light tracking-[5px] text-brand-deep uppercase -mt-1;
+}

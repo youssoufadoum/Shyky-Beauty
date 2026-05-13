@@ -1,0 +1,46 @@
+{
+  "entities": {
+    "Order": {
+      "title": "Order",
+      "description": "A customer order for beauty products",
+      "type": "object",
+      "properties": {
+        "customerName": { "type": "string" },
+        "customerContact": { "type": "string" },
+        "items": { "type": "array" },
+        "totalAmount": { "type": "number" },
+        "orderType": { "type": "string", "enum": ["pickup", "delivery"] },
+        "address": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "preparing", "delivered", "completed", "cancelled"] },
+        "paymentMethod": { "type": "string", "enum": ["cash"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["customerName", "customerContact", "items", "totalAmount", "orderType", "status", "paymentMethod", "createdAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "A beauty product",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "sub": { "type": "string" },
+        "img": { "type": "string" },
+        "swatches": { "type": "array" },
+        "desc": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "price", "sub", "img", "swatches", "desc", "createdAt"]
+    }
+  },
+  "firestore": {
+    "orders/{orderId}": {
+      "schema": "Order",
+      "description": "Collection of customer orders"
+    },
+    "products/{productId}": {
+      "schema": "Product",
+      "description": "Collection of beauty products"
+    }
+  }
+}
