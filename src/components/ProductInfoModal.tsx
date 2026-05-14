@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ShoppingBag } from 'lucide-react';
 import { Language, Product } from '../types';
+import { asset } from '../lib/utils';
 
 interface ProductInfoModalProps {
   selectedProduct: Product | null;
@@ -59,7 +60,7 @@ export const ProductInfoModal = ({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     className="w-full h-full object-cover" 
-                    src={selectedProduct.imgs ? selectedProduct.imgs[activeImgIndex] : selectedProduct.img} 
+                    src={asset(selectedProduct.imgs ? selectedProduct.imgs[activeImgIndex] : selectedProduct.img)} 
                     alt={selectedProduct.name} 
                   />
                 </AnimatePresence>
@@ -72,7 +73,7 @@ export const ProductInfoModal = ({
                       onClick={() => setActiveImgIndex(i)}
                       className={`w-16 h-16 flex-shrink-0 border-2 transition-all ${activeImgIndex === i ? 'border-brand-pink' : 'border-transparent opacity-60 hover:opacity-100'}`}
                     >
-                      <img src={img} className="w-full h-full object-cover" alt="" />
+                      <img src={asset(img)} className="w-full h-full object-cover" alt="" />
                     </button>
                   ))}
                 </div>

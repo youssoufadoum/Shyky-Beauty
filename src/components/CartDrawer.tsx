@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ShoppingBag, Trash2 } from 'lucide-react';
 import { Language } from '../types';
+import { asset } from '../lib/utils';
 
 interface CartDrawerProps {
   isCartOpen: boolean;
@@ -56,7 +57,7 @@ export const CartDrawer = ({
               ) : (
                 cart.map((item, i) => (
                   <div key={i} className="flex gap-4 items-center">
-                    <img src={item.img} className="w-20 h-20 object-cover" alt="" />
+                    <img src={asset(item.img)} className="w-20 h-20 object-cover" alt="" />
                     <div className="flex-1">
                       <p className="font-medium">{item.name}</p>
                       {item.color && (

@@ -17,6 +17,13 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
   return errInfo;
 }
 
+export function asset(path: string): string {
+  if (path.startsWith('http')) return path;
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${base}${cleanPath}`;
+}
+
 export const SectionTitle = ({ html, className = "" }: { html: string, className?: string }) => {
   // We can't import this in App unless we handle the prop types, but it's a simple component
   return null; 
