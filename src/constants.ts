@@ -1,4 +1,5 @@
 import { Language, TranslationSet, Product } from './types';
+import { asset } from './lib/utils';
 
 export const AUTHORIZED_USERS = ['y.adamabakar81@gmail.com', 'shykybeauty@yahoo.com'];
 
@@ -7,14 +8,14 @@ export const INITIAL_PRODUCTS: Product[] = [
     name: "Lip Gloss",
     price: 9000,
     sub: "Glossy Collection — Duo 9.000 Fcfa",
-    img: "/glossy-1.jpeg",
+    img: asset("/glossy-1.jpeg"),
     imgs: [
-      "/glossy-1.jpeg",
-      "/glossy-2.png",
-      "/glossy-3.jpeg",
-      "/glossy-4.png",
-      "/glossy-5.jpeg",
-      "/glossy-6.png"
+      asset("/glossy-1.jpeg"),
+      asset("/glossy-2.png"),
+      asset("/glossy-3.jpeg"),
+      asset("/glossy-4.png"),
+      asset("/glossy-5.jpeg"),
+      asset("/glossy-6.png")
     ],
     swatches: ["#FFC0CB", "#FFB6C1", "#7B3F00", "#F5F5DC", "#FFF8DC"],
     desc: {
@@ -28,7 +29,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     name: "Lip Liner",
     price: 9000,
     sub: "5 shades — Long Lasting",
-    img: "/liner-1.jpg",
+    img: asset("/liner-1.jpg"),
     swatches: ["#3D2B1F", "#CD7F32", "#DC143C", "#E6A8D7", "#3B2F2F"],
     desc: {
       fr: "Un traceur de lèvres précis et longue tenue pour définir parfaitement votre sourire. Couleurs: Dunk, Bronze, Crimson, Petal, Espresso.",
