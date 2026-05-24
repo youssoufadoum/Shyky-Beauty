@@ -206,11 +206,18 @@ export default function App() {
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     
+    const mainImg = String(formData.get('img'));
+    const additionalImgsRaw = String(formData.get('imgs') || '');
+    const additionalImgs = additionalImgsRaw
+      ? additionalImgsRaw.split(',').map(s => s.trim()).filter(Boolean)
+      : [];
+    
     const productData: Omit<Product, 'id'> = {
       name: String(formData.get('name')),
       price: Number(formData.get('price')),
       sub: String(formData.get('sub')),
-      img: String(formData.get('img')),
+      img: mainImg,
+      imgs: [mainImg, ...additionalImgs],
       swatches: String(formData.get('swatches')).split(',').map(s => s.trim()),
       desc: {
         fr: String(formData.get('desc_fr')),
@@ -315,6 +322,11 @@ export default function App() {
 
 const SellerDashboardProductForm = ({ isOpen, onClose, onSubmit, editingProduct, isSaving }: any) => {
   if (!isOpen) return null;
+
+  const initialAdditionalImgs = editingProduct?.imgs 
+    ? editingProduct.imgs.filter((item: string) => item !== editingProduct.img) 
+    : [];
+
   return (
     <div className="fixed inset-0 z-[210] flex items-center justify-center px-4">
       <div onClick={onClose} className="absolute inset-0 bg-brand-deep/60 backdrop-blur-md" />
@@ -326,7 +338,16 @@ const SellerDashboardProductForm = ({ isOpen, onClose, onSubmit, editingProduct,
             <input name="price" type="number" required defaultValue={editingProduct?.price} placeholder="Price" className="border p-3 outline-none" />
           </div>
           <input name="sub" required defaultValue={editingProduct?.sub} placeholder="Subtitle" className="w-full border p-3 outline-none" />
-          <input name="img" required defaultValue={editingProduct?.img} placeholder="Image URL" className="w-full border p-3 outline-none" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-col gap-1">
+              <label className="text-xs text-gray-400 uppercase tracking-widest font-medium">Main Image URL</label>
+              <input name="img" required defaultValue={editingProduct?.img} placeholder="Image URL (e.g. /glossy-1.jpeg)" className="border p-3 outline-none w-full" />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-xs text-gray-400 uppercase tracking-widest font-medium">Additional Image URLs (Comma-separated)</label>
+              <input name="imgs" defaultValue={initialAdditionalImgs.join(', ')} placeholder="Optional extra photos (comma separated)" className="border p-3 outline-none w-full" />
+            </div>
+          </div>
           <input name="swatches" required defaultValue={editingProduct?.swatches?.join(', ')} placeholder="Swatches (#hex, #hex)" className="w-full border p-3 outline-none" />
           <div className="space-y-4">
             <textarea name="desc_fr" placeholder="Description FR" defaultValue={editingProduct?.desc.fr} className="w-full border p-3 h-20 outline-none" />

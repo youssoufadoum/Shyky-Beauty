@@ -27,8 +27,8 @@ export const Hero = ({ t, isAr }: { t: TranslationSet; isAr: boolean }) => (
         <img className="w-full h-full object-cover" src={asset('/hero.jpg')} alt="Hero" />
       </Reveal>
       <div className={`absolute bottom-10 ${isAr ? 'right-10' : 'left-10'} bg-white/95 p-6 border-brand-pink ${isAr ? 'border-r-4' : 'border-l-4'}`}>
-        <div className="font-serif text-4xl text-brand-pink leading-none">9k</div>
-        <div className="text-[11px] tracking-[2px] uppercase text-gray-400 mt-1">Fcfa / Lip Duo</div>
+        <div className="font-serif text-4xl text-brand-pink leading-none">New</div>
+        <div className="text-[11px] tracking-[2px] uppercase text-gray-400 mt-1">Lip Duo Collection</div>
       </div>
     </div>
   </section>
@@ -168,7 +168,10 @@ export const Footer = ({ t }: { t: TranslationSet }) => (
   <>
     <footer className="bg-brand-deep py-20 px-10 md:px-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-white/40">
       <div className="lg:col-span-2">
-        <div className="logo text-white/90">Shyky<span className="text-white/30">Beauty</span></div>
+        <div className="logo text-white/90 flex items-baseline">
+          Shyky
+          <span className="text-xs font-light tracking-[2px] uppercase text-white/40 ml-1.5">Beauty</span>
+        </div>
         <p className="text-sm leading-relaxed mt-6 max-w-sm">{t.footer.desc}</p>
       </div>
       <div>
@@ -183,8 +186,37 @@ export const Footer = ({ t }: { t: TranslationSet }) => (
         <h4 className="text-[11px] tracking-[3px] uppercase text-white/20 mb-6">{t.contact.tag}</h4>
         <span className="text-[13px] text-brand-pink font-medium block mb-4">shykybeauty@yahoo.com</span>
         <div className="flex gap-4">
-          <a href="#" className="hover:text-brand-pink transition-colors"><Instagram className="w-5 h-5" /></a>
-          <a href="#" className="hover:text-brand-pink transition-colors"><MessageCircle className="w-5 h-5" /></a>
+          <a
+            href="https://www.instagram.com/shykybeauty?igsh=dGpteTcwbXU4MWFx&utm_source=ig_contact_invit"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-brand-pink transition-colors"
+            title="Instagram"
+          >
+            <Instagram className="w-5 h-5" />
+          </a>
+          <a
+            href="https://www.tiktok.com/@shykybeauty?_r=1&_t=ZS-96YM4mJQH1m"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-brand-pink transition-colors"
+            title="TikTok"
+          >
+            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.74-3.94-1.74a8.03 8.03 0 0 1-1.52-2.02v9.39c-.04 2.11-.74 4.21-2.15 5.79-1.58 1.83-4.04 2.82-6.49 2.55-2.61-.22-5.11-1.87-6.25-4.27a9.23 9.23 0 0 1-.95-4.14c-.05-2.63 1.2-5.26 3.35-6.81 1.76-1.32 4.07-1.85 6.25-1.42v4.09c-1.22-.38-2.58-.17-3.62.54-1.09.73-1.72 2.01-1.64 3.32.06 1.27.74 2.47 1.8 3.14 1.11.72 2.54.83 3.73.27 1.05-.48 1.7-1.56 1.73-2.73.01-3.03.01-6.06.01-9.09V.02z" />
+            </svg>
+          </a>
+          <a
+            href="https://snapchat.com/t/5EyfcsS1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-brand-pink transition-colors"
+            title="Snapchat"
+          >
+            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2A5.25 5.25 0 0 0 6.75 7.25c0 .9 0 1.76.2 2.5a3.81 3.81 0 0 1-1.65 1.63c-.45.24-.75.68-.75 1.2 0 1 .8 1.41 1.46 1.41a3 3 0 0 1 .49-.06 5.86 5.86 0 0 0 .53 1.13c-.66.33-.94.75-.94 1.25 0 .22.1.42.27.57a3.86 3.86 0 0 0 2.21.31c.07.6-.09.9-.94.9-1 0-1.25-.45-1.25-.45s-.85.3-.85 1.05c0 .7.85 1.5 4.75 1.5s4.75-.8 4.75-1.5c0-.75-.85-1.05-.85-1.05s-.3.5-1.25.5c-.85 0-1-.3-.93-.9a3.86 3.86 0 0 0 2.21-.31c.17-.15.27-.35.27-.57 0-.5-.28-.92-.94-1.25a5.86 5.86 0 0 0 .53-1.13 3 3 0 0 1 .49.06c.66 0 1.46-.41 1.46-1.41a1.2 1.2 0 0 0-.75-1.2 3.81 3.81 0 0 1-1.65-1.63c.2-.74.2-1.6.2-2.5A5.25 5.25 0 0 0 12 2z" />
+            </svg>
+          </a>
         </div>
       </div>
     </footer>

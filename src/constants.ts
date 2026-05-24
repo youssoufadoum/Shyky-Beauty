@@ -7,7 +7,7 @@ export const INITIAL_PRODUCTS: Product[] = [
   {
     name: "Lip Gloss",
     price: 9000,
-    sub: "Glossy Collection — Duo 9.000 Fcfa",
+    sub: "Glossy Collection — Duo Pack",
     img: asset("/glossy-1.jpeg"),
     imgs: [
       asset("/glossy-1.jpeg"),
@@ -32,9 +32,9 @@ export const INITIAL_PRODUCTS: Product[] = [
     img: asset("/liner-1.jpg"),
     swatches: ["#3D2B1F", "#CD7F32", "#DC143C", "#E6A8D7", "#3B2F2F"],
     desc: {
-      fr: "Un traceur de lèvres précis et longue tenue pour définir parfaitement votre sourire. Couleurs: Dunk, Bronze, Crimson, Petal, Espresso.",
-      en: "A precise, long-lasting lip liner to perfectly define your smile. Colors: Dunk, Bronze, Crimson, Petal, Espresso.",
-      ar: "محدد شفاه دقيق ويدوم طويلاً لتحديد ابتسامتك بشكل مثالي. الألوان: دانك، برونزي، قرمزي، بيتال، إسبريسو."
+      fr: "Un traceur de lèvres précis et longue tenue pour définir parfaitement votre sourire. Couleurs: Dune, Bronze, Crimson, Petal, Espresso.",
+      en: "A precise, long-lasting lip liner to perfectly define your smile. Colors: Dune, Bronze, Crimson, Petal, Espresso.",
+      ar: "محدد شفاه دقيق ويدوم طويلاً لتحديد ابتسامتك بشكل مثالي. الألوان: ديون، برونزي، قرمزي، بيتال، إسبريسو."
     },
     createdAt: "2024-01-01T00:00:00Z"
   }
@@ -46,7 +46,7 @@ export const translations: Record<Language, TranslationSet> = {
     hero: {
       tag: '✦ Glossy Collection',
       title: 'Votre <em>Éclat</em>,<br>Votre Pouvoir',
-      sub: 'Des lèvres qui racontent une histoire. Duo Lip Gloss & Lip Liner de luxe, conçu pour sublimer toutes les teintes de peau. 9.000 Fcfa le duo + 1.000 Fcfa livraison.',
+      sub: 'Des lèvres qui racontent une histoire. Duo Lip Gloss & Lip Liner de luxe, conçu pour sublimer toutes les teintes de peau.',
       discover: 'Découvrir',
       story: 'Notre Histoire',
       shades: 'Teintes Signature'
@@ -54,16 +54,16 @@ export const translations: Record<Language, TranslationSet> = {
     about: {
       tag: '✦ Notre Histoire',
       title: 'La beauté<br><em>sans limites</em>',
-      text: "Shyky Beauty est née d'une passion pour l'inclusion et l'élégance. Notre Glossy Collection — Lip Duo associe un Lip Gloss ultra-brillant à un Lip Liner précis, créant un duo idéal pour toutes les femmes du monde à seulement 9.000 Fcfa (Frais d'expédition 1.000 Fcfa).",
+      text: "Shyky Beauty est née d'une passion pour l'inclusion et l'élégance. Notre Glossy Collection — Lip Duo associe un Lip Gloss ultra-brillant à un Lip Liner précis, créant un duo idéal pour toutes les femmes du monde.",
       contact: 'Nous Contacter'
     },
     products: {
       tag: '✦ Boutique',
       title: 'La Collection <em>Signature</em>',
       view: 'Voir Produit',
-      glossShades: 'Lip Gloss — Partie du Duo à 9.000 Fcfa',
-      linerShades: 'Lip Liner — Partie du Duo à 9.000 Fcfa',
-      rusticCharm: 'Lip Duo Bundle — Gloss & Liner (9.000 Fcfa)'
+      glossShades: 'Lip Gloss — Partie du Duo',
+      linerShades: 'Lip Liner — Longue Tenue',
+      rusticCharm: 'Lip Duo Bundle — Gloss & Liner'
     },
     gallery: { tag: '✦ Galerie', title: 'Le Monde <em>Shyky</em>' },
     stats: { shades: 'Teintes Signature', crueltyFree: 'Cruelty Free', inclusive: 'Beauté Inclusive' },
@@ -91,7 +91,7 @@ export const translations: Record<Language, TranslationSet> = {
     hero: {
       tag: '✦ Glossy Collection',
       title: 'Your <em>Glow</em>,<br>Your Power',
-      sub: 'Lips that tell a story. High quality Lip Gloss & Lip Liner, designed to enhance every skin tone. The perfect duo for 9,000 Fcfa.',
+      sub: 'Lips that tell a story. High quality Lip Gloss & Lip Liner, designed to enhance every skin tone. The perfect duo.',
       discover: 'Discover',
       story: 'Our Story',
       shades: 'Signature Shades'
@@ -99,16 +99,16 @@ export const translations: Record<Language, TranslationSet> = {
     about: {
       tag: '✦ Our Story',
       title: 'Beauty<br><em>without limits</em>',
-      text: 'Shyky Beauty was born from a passion for inclusion and elegance. Our Glossy Collection — Lip Duo combines an ultra-shiny Lip Gloss with a precise Lip Liner, creating the perfect duo for women everywhere at just 9,000 Fcfa.',
+      text: 'Shyky Beauty was born from a passion for inclusion and elegance. Our Glossy Collection — Lip Duo combines an ultra-shiny Lip Gloss with a precise Lip Liner, creating the perfect duo for women everywhere.',
       contact: 'Contact Us'
     },
     products: {
       tag: '✦ Our Products',
       title: 'The <em>Signature</em> Collection',
       view: 'View Product',
-      glossShades: 'Glossy Collection — Duo 9,000 Fcfa',
+      glossShades: 'Glossy Collection — Duo',
       linerShades: '5 shades — Long Lasting',
-      rusticCharm: 'Lip Duo — Gloss & Liner (9,000 Fcfa)'
+      rusticCharm: 'Lip Duo — Gloss & Liner'
     },
     gallery: { tag: '✦ Gallery', title: 'The <em>Shyky</em> World' },
     stats: { shades: 'Signature Shades', crueltyFree: 'Cruelty Free', inclusive: 'Inclusive Beauty' },
@@ -136,7 +136,7 @@ export const translations: Record<Language, TranslationSet> = {
     hero: {
       tag: '✦ مجموعة لامعة',
       title: 'توهجك<br><em>قوّتك</em>',
-      sub: 'شفاه تحكي قصة. جلوس الشفاه وتحديد الشفاه عالي الجودة، مصمم لتعزيز كل لون بشرة. الثنائي المثالي بـ 9000 فرنك أفريقي.',
+      sub: 'شفاه تحكي قصة. جلوس الشفاه وتحديد الشفاه عالي الجودة، مصمم لتعزيز كل لون بشرة. الثنائي المثالي.',
       discover: 'اكتشفي',
       story: 'قصتنا',
       shades: 'ألوان مميزة'
@@ -144,16 +144,16 @@ export const translations: Record<Language, TranslationSet> = {
     about: {
       tag: '✦ قصتنا',
       title: 'الجمال<br><em>بلا حدود</em>',
-      text: 'وُلدت Shyky Beauty من شغف بالشمولية والأناقة. تجمع مجموعتنا اللامعة — Lip Duo بين جلوس شفاه فائق اللمعان ومحدد شفاه دقيق، لخلق ثنائي مثالي لكل نساء العالم بـ 9000 فرنك أفريقي فقط.',
+      text: 'وُلدت Shyky Beauty من شغف بالشمولية والأناقة. تجمع مجموعتنا اللامعة — Lip Duo بين جلوس شفاه فائق اللمعان ومحدد شفاه دقيق، لخلق ثنائي مثالي لكل نساء العالم.',
       contact: 'تواصلي معنا'
     },
     products: {
       tag: '✦ منتجاتنا',
       title: 'المجموعة <em>المميزة</em>',
       view: 'عرض المنتج',
-      glossShades: 'مجموعة لامعة — ثنائي بـ 9000 فرنك',
+      glossShades: 'مجموعة لامعة — ثنائي',
       linerShades: '5 ألوان — طويل الأمد',
-      rusticCharm: 'Lip Duo — جلوس ومحدد (9000 فرنك)'
+      rusticCharm: 'Lip Duo — جلوس ومحدد'
     },
     gallery: { tag: '✦ معرض', title: 'عالم <em>Shyky</em>' },
     stats: { shades: 'ألوان مميزة', crueltyFree: 'خالٍ من القسوة', inclusive: 'جمال شامل' },
