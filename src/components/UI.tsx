@@ -1,5 +1,6 @@
-import { ReactNode } from 'react';
+import React, { ReactNode, useState, useEffect, forwardRef } from 'react';
 import { motion } from 'motion/react';
+import { getFallbackUrl } from '../lib/utils';
 
 export const SectionTitle = ({ html, className = "" }: { html: string, className?: string }) => (
   <h2 
@@ -20,3 +21,45 @@ export const Reveal = ({ children, className = "", ...props }: { children: React
     {children}
   </motion.div>
 );
+
+interface SafeImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+  src: string;
+}
+
+export const SafeImage = forwardRef<HTMLImageElement, SafeImageProps>(
+  ({ src, alt = "", className = "", ...props }, ref) => {
+    const [imgSrc, setImgSrc] = useState(src);
+    const [hasError, setHasError] = useState(false);
+
+    useEffect(() => {
+      setImgSrc(src);
+      setHasError(false);
+    }, [src]);
+
+    const handleError = () => {
+      if (!hasError) {
+        setHasError(true);
+        // Only trigger the mock/stock fallback if it's a local static asset (doesn't start with http/https)
+        if (src && !src.startsWith('http://') && !src.startsWith('https://')) {
+          const fallback = getFallbackUrl(src);
+          if (fallback !== src) {
+            setImgSrc(fallback);
+          }
+        }
+      }
+    };
+
+    return (
+      <img
+        ref={ref}
+        src={imgSrc}
+        alt={alt}
+        className={className}
+        onError={handleError}
+        {...props}
+      />
+    );
+  }
+);
+SafeImage.displayName = 'SafeImage';
+

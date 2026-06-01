@@ -8,14 +8,14 @@ export const INITIAL_PRODUCTS: Product[] = [
     name: "Lip Gloss",
     price: 9000,
     sub: "Glossy Collection — Duo Pack",
-    img: asset("/glossy-1.jpeg"),
+    img: asset("/glossy-1.jpg"),
     imgs: [
-      asset("/glossy-1.jpeg"),
-      asset("/glossy-2.png"),
-      asset("/glossy-3.jpeg"),
-      asset("/glossy-4.png"),
-      asset("/glossy-5.jpeg"),
-      asset("/glossy-6.png")
+      asset("/glossy-1.jpg"),
+      asset("/glossy-2.jpg"),
+      asset("/glossy-3.jpg"),
+      asset("/glossy-4.jpg"),
+      asset("/glossy-5.jpg"),
+      asset("/glossy-6.jpg")
     ],
     swatches: ["#FFC0CB", "#FFB6C1", "#7B3F00", "#F5F5DC", "#FFF8DC"],
     desc: {

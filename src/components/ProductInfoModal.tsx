@@ -2,6 +2,9 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X, ShoppingBag } from 'lucide-react';
 import { Language, Product } from '../types';
 import { asset } from '../lib/utils';
+import { SafeImage } from './UI';
+
+const MotionSafeImage = motion(SafeImage);
 
 interface ProductInfoModalProps {
   selectedProduct: Product | null;
@@ -54,7 +57,7 @@ export const ProductInfoModal = ({
             <div className="w-full md:w-1/2 flex flex-col">
               <div className="relative flex-1 aspect-square overflow-hidden bg-gray-50">
                 <AnimatePresence mode="wait">
-                  <motion.img 
+                  <MotionSafeImage 
                     key={activeImgIndex}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -73,7 +76,7 @@ export const ProductInfoModal = ({
                       onClick={() => setActiveImgIndex(i)}
                       className={`w-16 h-16 flex-shrink-0 border-2 transition-all ${activeImgIndex === i ? 'border-brand-pink' : 'border-transparent opacity-60 hover:opacity-100'}`}
                     >
-                      <img src={asset(img)} className="w-full h-full object-cover" alt="" />
+                      <SafeImage src={asset(img)} className="w-full h-full object-cover" alt="" />
                     </button>
                   ))}
                 </div>

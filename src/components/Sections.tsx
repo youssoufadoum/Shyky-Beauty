@@ -1,5 +1,5 @@
 import { Language, TranslationSet, Product } from '../types';
-import { SectionTitle, Reveal } from './UI';
+import { SectionTitle, Reveal, SafeImage } from './UI';
 import { MessageSquare, Instagram, MessageCircle } from 'lucide-react';
 import { asset } from '../lib/utils';
 
@@ -24,7 +24,7 @@ export const Hero = ({ t, isAr }: { t: TranslationSet; isAr: boolean }) => (
     </div>
     <div className="relative overflow-hidden bg-[#f0dae2] aspect-[4/5] lg:aspect-auto">
       <Reveal className="w-full h-full object-cover">
-        <img className="w-full h-full object-cover" src={asset('/hero.jpg')} alt="Hero" />
+        <SafeImage className="w-full h-full object-cover" src={asset('/hero.jpg')} alt="Hero" />
       </Reveal>
       <div className={`absolute bottom-10 ${isAr ? 'right-10' : 'left-10'} bg-white/95 p-6 border-brand-pink ${isAr ? 'border-r-4' : 'border-l-4'}`}>
         <div className="font-serif text-4xl text-brand-pink leading-none">New</div>
@@ -51,8 +51,8 @@ export const Marquee = () => (
 export const About = ({ t }: { t: TranslationSet }) => (
   <section className="grid grid-cols-1 lg:grid-cols-2 gap-10 py-20 px-10 md:px-20" id="about">
     <Reveal className="grid grid-cols-2 gap-2">
-      <img className="w-full h-[320px] object-cover self-end" src={asset('/about-1.jpg')} alt="About 1" />
-      <img className="w-full h-[260px] object-cover mt-10" src={asset('/about-2.jpg')} alt="About 2" />
+      <SafeImage className="w-full h-[320px] object-cover self-end" src={asset('/about-1.jpg')} alt="About 1" />
+      <SafeImage className="w-full h-[260px] object-cover mt-10" src={asset('/about-2.jpg')} alt="About 2" />
     </Reveal>
     <Reveal className="flex flex-col justify-center">
       <p className="text-[11px] tracking-[4px] uppercase text-brand-gold mb-5">{t.about.tag}</p>
@@ -76,7 +76,7 @@ export const ProductGrid = ({ t, products, onProductClick }: { t: TranslationSet
         <div key={prod.id || idx} onClick={() => onProductClick(prod)}>
           <Reveal className="group relative bg-white overflow-hidden cursor-pointer h-full">
             <div className="overflow-hidden aspect-[4/5]">
-              <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src={asset(prod.img)} alt={prod.name} />
+              <SafeImage className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src={asset(prod.img)} alt={prod.name} />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center">
                 <p className="text-white font-serif text-2xl italic mb-4">{prod.name}</p>
                 <span className="text-white text-[11px] tracking-[3px] uppercase border border-white px-7 py-3 hover:bg-white hover:text-brand-deep transition-all">
@@ -109,7 +109,7 @@ export const Gallery = ({ t }: { t: TranslationSet }) => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
       {[asset('/gallery-1.jpg'), asset('/gallery-2.jpg'), asset('/gallery-3.jpg'), asset('/gallery-4.jpg'), asset('/gallery-5.jpg')].map((src, i) => (
         <Reveal key={i} className={`${i === 0 ? 'lg:row-span-2' : ''} overflow-hidden`}>
-          <img className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 aspect-[4/5]" src={src} alt={`Gallery ${i+1}`} />
+          <SafeImage className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 aspect-[4/5]" src={src} alt={`Gallery ${i+1}`} />
         </Reveal>
       ))}
     </div>
@@ -145,7 +145,7 @@ export const Testimonial = ({ t }: { t: TranslationSet }) => (
 
 export const Contact = ({ t }: { t: TranslationSet }) => (
   <section className="grid grid-cols-1 lg:grid-cols-2" id="contact">
-    <div className="hidden lg:block overflow-hidden"><img className="w-full h-full object-cover" src={asset('/contact.jpg')} alt="Contact" /></div>
+    <div className="hidden lg:block overflow-hidden"><SafeImage className="w-full h-full object-cover" src={asset('/contact.jpg')} alt="Contact" /></div>
     <Reveal className="p-10 md:p-20 bg-brand-light flex flex-col justify-center">
       <p className="text-[11px] tracking-[4px] uppercase text-brand-gold mb-5">{t.contact.tag}</p>
       <SectionTitle html={t.contact.title} />

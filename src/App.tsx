@@ -80,7 +80,7 @@ export default function App() {
       
       dbProducts.forEach(dbProd => {
         const index = combined.findIndex(p => p.name === dbProd.name);
-        if (index !== -1) combined[index] = dbProd;
+        if (index !== -1) combined[index] = { ...combined[index], ...dbProd };
         else combined.push(dbProd);
       });
       setProducts(combined);
@@ -341,7 +341,7 @@ const SellerDashboardProductForm = ({ isOpen, onClose, onSubmit, editingProduct,
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="flex flex-col gap-1">
               <label className="text-xs text-gray-400 uppercase tracking-widest font-medium">Main Image URL</label>
-              <input name="img" required defaultValue={editingProduct?.img} placeholder="Image URL (e.g. /glossy-1.jpeg)" className="border p-3 outline-none w-full" />
+              <input name="img" required defaultValue={editingProduct?.img} placeholder="Image URL (e.g. /glossy-1.jpg)" className="border p-3 outline-none w-full" />
             </div>
             <div className="flex flex-col gap-1">
               <label className="text-xs text-gray-400 uppercase tracking-widest font-medium">Additional Image URLs (Comma-separated)</label>
