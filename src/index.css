@@ -1,12 +1,21 @@
+@font-face {
+  font-family: 'Gistesy';
+  src: url('/fonts/Gistesy.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Mr+De+Haviland&family=Pinyon+Script&family=Alex+Brush&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-serif: "Cormorant Garamond", serif;
   --font-sans: "Jost", sans-serif;
-  --font-signature: "Mr De Haviland", cursive;
+  --font-signature: "Gistesy", "Mr De Haviland", cursive;
   --font-pinyon: "Pinyon Script", cursive;
   --font-alex: "Alex Brush", cursive;
+  --font-gistes: "Gistesy", sans-serif;
   
   --color-brand-pink: #e8547a;
   --color-brand-dark-pink: #c43060;
@@ -45,13 +54,13 @@
 
 /* Elegant luxury handwriting styles without neon glows */
 .neon-shyky {
-  font-family: "Mr De Haviland", cursive;
+  font-family: "Gistesy", "Mr De Haviland", cursive;
   color: #ff758f;
 }
 
 /* Handwriting style for dark backgrounds (footer) */
 .neon-shyky-dark {
-  font-family: "Mr De Haviland", cursive;
+  font-family: "Gistesy", "Mr De Haviland", cursive;
   color: #ffb3c6;
 }
 
