@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Mr+De+Haviland&family=Pinyon+Script&family=Alex+Brush&display=swap');
+
 @font-face {
   font-family: 'Gistesy';
   src: url('/fonts/Gistesy.ttf') format('truetype');
@@ -5,9 +8,6 @@
   font-style: normal;
   font-display: swap;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Mr+De+Haviland&family=Pinyon+Script&family=Alex+Brush&display=swap');
-@import "tailwindcss";
 
 @theme {
   --font-serif: "Cormorant Garamond", serif;
