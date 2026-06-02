@@ -1,9 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Mr+De+Haviland&family=Pinyon+Script&family=Alex+Brush&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-serif: "Cormorant Garamond", serif;
   --font-sans: "Jost", sans-serif;
+  --font-signature: "Mr De Haviland", cursive;
+  --font-pinyon: "Pinyon Script", cursive;
+  --font-alex: "Alex Brush", cursive;
   
   --color-brand-pink: #e8547a;
   --color-brand-dark-pink: #c43060;
@@ -12,6 +15,7 @@
   --color-brand-deep: #1a0a0f;
   --color-brand-gold: #c9a96e;
   --color-brand-light: #fff9f7;
+  --color-rose-light: #ff758f;
 }
 
 @layer base {
@@ -37,6 +41,18 @@
 
 .logo span {
   @apply block text-[10px] font-light tracking-[5px] text-brand-deep uppercase -mt-1;
+}
+
+/* Elegant luxury handwriting styles without neon glows */
+.neon-shyky {
+  font-family: "Mr De Haviland", cursive;
+  color: #ff758f;
+}
+
+/* Handwriting style for dark backgrounds (footer) */
+.neon-shyky-dark {
+  font-family: "Mr De Haviland", cursive;
+  color: #ffb3c6;
 }
 
 @layer utilities {

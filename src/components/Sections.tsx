@@ -168,9 +168,13 @@ export const Footer = ({ t }: { t: TranslationSet }) => (
   <>
     <footer className="bg-brand-deep py-20 px-10 md:px-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-white/40">
       <div className="lg:col-span-2">
-        <div className="logo text-white/90 flex items-baseline">
-          Shyky
-          <span className="text-xs font-light tracking-[2px] uppercase text-white/40 ml-1.5">Beauty</span>
+        <div className="relative inline-block select-none pb-3 pt-1">
+          <span className="neon-shyky-dark text-4xl md:text-5xl leading-none pr-3">
+            Shyky
+          </span>
+          <span className="absolute left-[33%] bottom-[1px] whitespace-nowrap text-[9px] font-sans font-light tracking-[3.5px] uppercase text-[#ffb3c6]">
+            beauty
+          </span>
         </div>
         <p className="text-sm leading-relaxed mt-6 max-w-sm">{t.footer.desc}</p>
       </div>
