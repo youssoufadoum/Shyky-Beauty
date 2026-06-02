@@ -33,13 +33,12 @@ export const Navbar = ({
 }: NavbarProps) => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-5 md:px-10 py-4 flex items-center justify-between bg-brand-cream/90 backdrop-blur-md border-b border-brand-pink/10">
-      <a className="relative block group select-none no-underline pb-3 pt-1" href="#">
-        <span className="relative -top-[6px] inline-block neon-shyky text-3xl md:text-4xl leading-none pr-3">
-          Shyky
-        </span>
-        <span className="absolute left-[45%] bottom-[1px] whitespace-nowrap text-[9px] font-sans font-light tracking-[3.5px] uppercase text-rose-light">
-          beauty
-        </span>
+      <a className="block select-none no-underline" href="#">
+        <img 
+          src="/logo.png" 
+          alt="Shyky Beauty" 
+          className="h-8 md:h-10 w-auto object-contain"
+        />
       </a>
       
       <ul className="hidden md:flex items-center gap-8 list-none">
