@@ -172,7 +172,7 @@ export const Footer = ({ t }: { t: TranslationSet }) => (
           <img 
             src="/logo.png" 
             alt="Shyky Beauty" 
-            className="h-8 md:h-10 w-auto object-contain brightness-0 invert" 
+            className="h-16 md:h-20 w-auto object-contain brightness-0 invert" 
           />
         </div>
         <p className="text-sm leading-relaxed mt-6 max-w-sm">{t.footer.desc}</p>
