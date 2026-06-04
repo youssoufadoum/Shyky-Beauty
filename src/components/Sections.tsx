@@ -68,7 +68,6 @@ export const About = ({ t }: { t: TranslationSet }) => (
 export const ProductGrid = ({ t, products, onProductClick }: { t: TranslationSet; products: Product[]; onProductClick: (p: Product) => void }) => (
   <section className="py-20 px-10 md:px-20 bg-brand-light" id="products">
     <div className="text-center mb-16">
-      <p className="text-[11px] tracking-[4px] uppercase text-brand-gold mb-5">{t.products.tag}</p>
       <SectionTitle html={t.products.title} className="text-center" />
     </div>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
