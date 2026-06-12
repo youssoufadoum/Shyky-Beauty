@@ -1,6 +1,6 @@
 import { useState, useEffect, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, ShieldAlert, ExternalLink, X } from 'lucide-react';
 import { auth, db, login, logout, collection, addDoc, onSnapshot, query, orderBy, updateDoc, doc, deleteDoc, serverTimestamp, getDocFromServer } from './lib/firebase';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 
@@ -27,10 +27,13 @@ export default function App() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isOrderLoading, setIsOrderLoading] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState<string | null>(null);
+  const [productSuccess, setProductSuccess] = useState<string | null>(null);
+  const [productError, setProductError] = useState<string | null>(null);
   
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [authError, setAuthError] = useState<{ code: string; message: string; showHelp: boolean } | null>(null);
   const [orders, setOrders] = useState<any[]>([]);
   const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
   const [showSellerView, setShowSellerView] = useState(false);
@@ -122,15 +125,37 @@ export default function App() {
 
   const handleAuthLogin = async () => {
     setIsLoggingIn(true);
+    setAuthError(null);
     try {
       const u = await login();
       if (u) {
         const isAuthorized = AUTHORIZED_USERS.includes(u.email || '');
-        if (!isAuthorized) alert(`Authorized list check failed for ${u.email}`);
-        else if (!u.emailVerified) alert("Email not verified.");
+        if (!isAuthorized) {
+          setAuthError({
+            code: 'auth/unauthorized-user',
+            message: `L'adresse e-mail ${u.email} n'est pas autorisée dans la liste d'administration / The email ${u.email} is not in the authorized admin list.`,
+            showHelp: false
+          });
+        } else if (!u.emailVerified) {
+          setAuthError({
+            code: 'auth/email-not-verified',
+            message: "L'e-mail de l'administrateur n'est pas vérifié. / The admin email is not verified.",
+            showHelp: false
+          });
+        }
       }
     } catch (err: any) {
-      alert(err.message || "Auth error");
+      console.error("Login failure: ", err);
+      // In a nested frame context, signInWithPopup often fails due to third-party cookie restrictions
+      const isIframe = window.self !== window.top;
+      const isUnauthorizedDomain = err?.code === 'auth/unauthorized-domain' || 
+                                   String(err?.message || '').includes('unauthorized-domain') ||
+                                   String(err || '').includes('unauthorized-domain');
+      setAuthError({
+        code: err?.code || 'auth/unknown',
+        message: err?.message || String(err),
+        showHelp: isUnauthorizedDomain || isIframe
+      });
     } finally {
       setIsLoggingIn(false);
     }
@@ -200,7 +225,18 @@ export default function App() {
 
   const handleProductSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!isAdmin) return;
+    setProductError(null);
+    setProductSuccess(null);
+
+    if (!isAdmin) {
+      const errMessage = lang === 'fr' 
+        ? "Vous n'avez pas d'autorisation administrateur pour enregistrer des produits. Si vous venez de vous connecter, assurez-vous que votre adresse e-mail est vérifiée."
+        : "You do not have administrator permissions to save products. If you just logged in, please make sure your email is verified.";
+      setProductError(errMessage);
+      alert(errMessage);
+      return;
+    }
+
     setIsSavingProduct(true);
     
     const form = e.target as HTMLFormElement;
@@ -228,12 +264,24 @@ export default function App() {
     };
 
     try {
-      if (editingProduct?.id) await updateDoc(doc(db, 'products', editingProduct.id), productData);
-      else await addDoc(collection(db, 'products'), productData);
+      if (editingProduct?.id) {
+        await updateDoc(doc(db, 'products', editingProduct.id), productData);
+        setProductSuccess(lang === 'fr' ? `Produit "${productData.name}" mis à jour avec succès !` : `Product "${productData.name}" successfully updated!`);
+      } else {
+        await addDoc(collection(db, 'products'), productData);
+        setProductSuccess(lang === 'fr' ? `Produit "${productData.name}" ajouté avec succès !` : `Product "${productData.name}" successfully added!`);
+      }
       setIsProductModalOpen(false);
       setEditingProduct(null);
-    } catch (error) {
-      handleFirestoreError(error, OperationType.WRITE, 'products');
+      
+      // Auto-dismiss the success notification after 5 seconds
+      setTimeout(() => setProductSuccess(null), 5000);
+    } catch (error: any) {
+      console.error("Error saving product: ", error);
+      const fsErr = handleFirestoreError(error, OperationType.WRITE, 'products');
+      const friendlyError = fsErr.error || String(error);
+      setProductError(friendlyError);
+      alert(`${lang === 'fr' ? "Erreur d'enregistrement : " : "Error saving product: "} ${friendlyError}`);
     } finally {
       setIsSavingProduct(false);
     }
@@ -302,6 +350,7 @@ export default function App() {
       <SellerDashboardProductForm 
         isOpen={isProductModalOpen} onClose={() => setIsProductModalOpen(false)}
         onSubmit={handleProductSubmit} editingProduct={editingProduct} isSaving={isSavingProduct}
+        productError={productError} setProductError={setProductError}
       />
 
       {/* Success Notification */}
@@ -315,12 +364,120 @@ export default function App() {
             </div>
           </div>
         )}
+        {productSuccess && (
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-10 right-10 z-[200] bg-brand-pink text-white p-6 shadow-2xl flex items-center gap-4 rounded-xl border border-white/20"
+          >
+            <CheckCircle className="w-8 h-8" />
+            <div>
+              <p className="font-serif text-xl">{lang === 'fr' ? 'Succès !' : 'Success!'}</p>
+              <p className="text-xs uppercase tracking-widest opacity-80">{productSuccess}</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Firebase Auth Error Modal & Preview Environment Assistant */}
+      <AnimatePresence>
+        {authError && (
+          <div className="fixed inset-0 z-[250] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setAuthError(null)}
+              className="absolute inset-0 bg-brand-deep/60 backdrop-blur-md"
+            />
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="relative bg-white w-full max-w-lg p-6 md:p-8 shadow-2xl border border-brand-pink/10 text-brand-deep overflow-hidden rounded-2xl"
+            >
+              <button 
+                onClick={() => setAuthError(null)}
+                className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
+                title="Close"
+              >
+                <X className="w-5 h-5 text-gray-400 hover:text-brand-deep" />
+              </button>
+
+              <div className="flex items-start gap-4 mt-2">
+                <div className="p-3 bg-red-50 text-red-500 rounded-xl">
+                  <ShieldAlert className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-2xl mb-1 text-brand-deep">
+                    {lang === 'fr' ? 'Erreur de connexion' : 'Login Error'}
+                  </h3>
+                  <p className="text-xs text-red-500 uppercase tracking-widest font-mono">
+                    {authError.code}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 text-sm text-gray-600 leading-relaxed space-y-4">
+                <p className="font-sans font-medium text-gray-800">
+                  {authError.message}
+                </p>
+
+                {authError.showHelp && (
+                  <div className="bg-brand-cream/80 border border-brand-pink/20 p-4 rounded-xl mt-4 space-y-3">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-brand-pink">
+                      ✦ {lang === 'fr' ? 'Solution de contournement (Aperçu)' : 'Preview Environment Solution'}
+                    </p>
+                    <p className="text-xs text-gray-600 leading-relaxed">
+                      {lang === 'fr' 
+                        ? "En raison des restrictions d'iframe des navigateurs web récents, les connexions par pop-up tiers de Firebase Auth sont bloquées lorsqu'elles sont exécutées dans un cadre intégré d'aperçu d'éditeur."
+                        : "Due to modern browser security and iframe privacy settings, Firebase Auth popups are blocked from completing authentication inside embedded editing workspace frames."}
+                    </p>
+                    <p className="text-xs text-gray-700 font-medium font-sans">
+                      {lang === 'fr'
+                        ? "👉 Veuillez ouvrir votre application directement dans un nouvel onglet autonome à l'aide de l'icône de flèche (Open in New Tab) située en haut à droite de l'aperçu AI Studio pour que la connexion s'exécute correctement."
+                        : "👉 Please open the application in a standalone browser tab using the 'Open in New Tab' arrow icon at the top-right corner of the development preview window to log in."}
+                    </p>
+                    
+                    <a 
+                      href={window.location.href} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 bg-brand-pink hover:bg-brand-deep text-white px-4 py-3 text-[11px] tracking-widest uppercase transition-colors rounded font-sans w-full justify-center mt-2 cursor-pointer text-center font-medium"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      {lang === 'fr' ? "Ouvrir dans un nouvel onglet" : "Open in New Tab"}
+                    </a>
+                  </div>
+                )}
+
+                {!authError.showHelp && (
+                  <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded-lg border border-gray-100 font-sans">
+                    {lang === 'fr'
+                      ? `Si vous utilisez un domaine personnalisé, assurez-vous d'avoir ajouté "${window.location.hostname}" à la liste des domaines autorisés ("Authorized domains") dans vos paramètres Firebase Auth console.`
+                      : `If deploying to a custom domain, ensure that "${window.location.hostname}" has been explicitly whitelisted under "Authorized domains" within the Firebase Console settings.`}
+                  </div>
+                )}
+              </div>
+
+              <div className="mt-8 flex justify-end">
+                <button 
+                  onClick={() => setAuthError(null)}
+                  className="bg-brand-deep text-white hover:bg-brand-pink px-6 py-2.5 text-xs tracking-widest uppercase transition-colors cursor-pointer font-sans rounded-lg"
+                >
+                  {lang === 'fr' ? 'Fermer' : 'Close'}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
       </AnimatePresence>
     </div>
   );
 }
 
-const SellerDashboardProductForm = ({ isOpen, onClose, onSubmit, editingProduct, isSaving }: any) => {
+const SellerDashboardProductForm = ({ isOpen, onClose, onSubmit, editingProduct, isSaving, productError, setProductError }: any) => {
   if (!isOpen) return null;
 
   const initialAdditionalImgs = editingProduct?.imgs 
@@ -332,6 +489,24 @@ const SellerDashboardProductForm = ({ isOpen, onClose, onSubmit, editingProduct,
       <div onClick={onClose} className="absolute inset-0 bg-brand-deep/60 backdrop-blur-md" />
       <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="relative bg-white w-full max-w-2xl p-10 shadow-2xl h-[90vh] overflow-y-auto">
         <h3 className="font-serif text-3xl mb-8">{editingProduct ? 'Edit Product' : 'Add New Product'}</h3>
+        
+        {/* Error Banner */}
+        {productError && (
+          <div className="bg-red-50 text-red-700 p-4 rounded-xl border border-red-100 text-xs mb-6 flex justify-between items-start leading-relaxed">
+            <div className="flex-1">
+              <p className="font-semibold mb-1">Could not save product / Impossible d'enregistrer le produit :</p>
+              <p className="font-mono">{productError}</p>
+            </div>
+            <button 
+              type="button" 
+              onClick={() => setProductError(null)} 
+              className="text-red-400 hover:text-red-700 font-bold ml-3 text-sm px-1.5 py-0.5 hover:bg-red-100 rounded transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
         <form onSubmit={onSubmit} className="space-y-6">
           <div className="grid grid-cols-2 gap-6">
             <input name="name" required defaultValue={editingProduct?.name} placeholder="Name" className="border p-3 outline-none" />
